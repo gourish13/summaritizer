@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#particles-js {
+    background: #24292e;
+    width: 100%;
+    height: 70vh;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.page-heading {
+    width: 70%;
+    height: 20vh;
+    margin-top: 20vh;
+    margin-left: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+    font-family: 'RocknRoll One', sans-serif;
+}
+
+.page-heading p {
+    padding: 0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 6vw;
+}
+
+.page-heading #sub {
+    font-size: 2vw;
+}
+
+.page-heading #sub span {
+    margin-left: 20%;
+}
+
+
+
+
+
+
+@media screen and (max-width: 991px) {
+    #particles-js {
+	height: 50vh;
+    }
+    .page-heading {
+	margin-top: 10vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #particles-js {
+	height: 40vh;
+    }
+    .page-heading {
+	margin-top: 5vh;
+    }
+    .page-heading #sub {
+	font-size: 2.2vw;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .page-heading {
+	width: 80%;
+	margin-top: 10vh;
+	margin-left: 10%;
+    }
+    .page-heading p {
+	font-size: 7vw;
+    }
+
+    .page-heading #sub {
+	padding: 30px;
+	font-size: 4vw;
+    }
+
+    .page-heading #sub span {
+	margin-left: 0;
+    }
+
+}
