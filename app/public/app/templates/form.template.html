@@ -1,0 +1,18 @@
+<form name="content">
+      <div class="field">
+	<label class="label">Author</label>
+	<input name="author" type="text" class="input is-normal is-primary is-hovered" placeholder="Author" ng-model="$ctrl.author">
+      </div>
+      <div class="field">
+	<label class="label">Delete After</label>
+	<input name="HH"type="number" class="input is-normal is-primary is-hovered" min="0" max="23" placeholder="Hours" ng-model="$ctrl.hours">
+	<input name="MM" type="number" class="input is-normal is-primary is-hovered" min="0" max="59" placeholder="Minutes" ng-model="$ctrl.minutes">
+      </div>
+      <textarea></textarea>
+</form>
+<div ng-hide="$ctrl.update">
+<button id="savebutton" class="button is-primary is-medium is-fullwidth"
+	ng-click="$ctrl.saveContent()"
+	ng-disabled="$ctrl.author=='' || $ctrl.hours=='' || $ctrl.minutes=='' || content.HH.$invalid || content.MM.$invalid" >Save</button>
+</div>
+<div ng-show="$ctrl.update"></div>

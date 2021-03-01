@@ -1,25 +1,35 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="Summaritizer">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Summaritizer</title>
+    <link rel="shortcut icon" type="images/png" href="https://drive.google.com/uc?id=1DqUkS5KPie6Zbfre3Eukl-JGMqG1hA8h">
+    <title ng-bind="$root.title+' | Summaritizer'"></title>
+    <base href="/">
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- Particle.js -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="/static/index.js"></script>
+    <!-- Simple Markdown Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <!--MarkedJS-->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- HighlightJS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.6.0/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.6.0/build/highlight.min.js"></script>
+    <!--AngularJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+    <script src="/static/app/app.js"></script>
+    <script src="/static/app/creater/creater.component.js"></script>
+    <script src="/static/app/creater/creater.services.js"></script>
+    <script src="/static/app/content_form/contentform.component.js"></script>
+    <script src="/static/app/content_form/contentform.services.js"></script>
+    <!--mystuffs-->
     <link rel="stylesheet" type="text/css" href="/static/main.css">
   </head>
   <body>
-    <header id="particles-js">
-      <div class="page-heading">
-	<p>Summaritizer</p>
-	<p id="sub">
-	  <span>Wanna share some idea or a piece of article?</span> <br>
-	  Whats better than markdown to write it, and share it for a limited time
-	</p>
-      </div>
-    </header>
+    <ng-view></ng-view>
   </body>
 </html>

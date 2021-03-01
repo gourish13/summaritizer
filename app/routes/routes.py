@@ -16,8 +16,16 @@ url = urljoin(
 app.add_route("GET", url, app.render_static)
 ############################################################
 
+
 @app.get('/')
 def index(request):
+    return app.render(request,
+                      open('app/public/index.html', 'r').read()
+    )
+
+
+@app.get('/<any:offset>')
+def index(request, offset):
     return app.render(request,
                       open('app/public/index.html', 'r').read()
     )
