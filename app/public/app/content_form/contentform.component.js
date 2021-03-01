@@ -11,8 +11,23 @@ angular.module("contentForm").component("createForm", {
 	this.hours='';
 	this.minutes= '';
 	this.update = false;
+	this.msg = "";
+
+	this.anyFieldEmpty = function() {
+	    return (
+		this.author === "" ||
+		this.hours === "" ||
+		this.minutes === ""
+		    
+	    );
+	}
 	
 	this.saveContent = function() {
+	    if (simpleMdE.getValue().length === 0) {
+		this.msg = "No content to save";
+		return
+	    }
+	    this.msg = "";
 	    $location.path('/update/1/3');
 	}
     }]

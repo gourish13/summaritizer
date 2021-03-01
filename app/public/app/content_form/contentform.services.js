@@ -3,17 +3,19 @@ angular.module('contentForm').service("simpleMdE", function() {
     this.initEditor =  function(element) {
 	simplemde = new SimpleMDE({
 		element: element,
-		spellChecker: true,
+	        spellChecker: true,
+	        hideIcons: ["guide"],
 	        renderingConfig: {
 		        singleLineBreaks: false,
 		        codeSyntaxHighlighting: true,
 		},
 	});
     }
-    this.value = function() {
+    this.getValue = function() {
+	console.log(simplemde.value())
 	return simplemde.value();
     }
-    this.value = function(mdContent) {
+    this.setValue = function(mdContent) {
 	simplemde.value(mdContent);
     }
 })
