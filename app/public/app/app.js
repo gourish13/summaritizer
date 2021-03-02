@@ -1,6 +1,7 @@
 angular.module("Summaritizer", [
     'ngRoute',
-    'creater', 
+    'creater',
+    'updater',
 ]);
 
 
@@ -15,7 +16,7 @@ angular.module("Summaritizer").config(['$routeProvider', function($routeProvider
 	    title: "View"
 	})
         .when('/update/:id/:uuid', {
-	    template: '<h1>Updater</h1>',
+	    template: '<update></update>',
 	    title: "Update"
 	})
         .otherwise('/');

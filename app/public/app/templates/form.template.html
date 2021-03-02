@@ -1,3 +1,4 @@
+<div class="loader-wrapper" ng-hide="$ctrl.loaded"><div class="loader is-loading"></div></div>
 <form name="content">
       <div class="field">
 	<label class="label">Author</label>
@@ -8,12 +9,19 @@
 	<input name="HH"type="number" class="input is-normal is-primary is-hovered" min="1" max="23" placeholder="Hours" ng-model="$ctrl.hours">
 	<input name="MM" type="number" class="input is-normal is-primary is-hovered" min="0" max="59" placeholder="Minutes" ng-model="$ctrl.minutes">
       </div>
+      <div class="field">
+	<label class="label">Email</label>
+	<div class="control has-icons-left has-icons-right">
+	  <input class={{$ctrl.validEmail(content.email.$valid)}} name="email" type="email" placeholder="your-id@email.com" ng-model="$ctrl.email">
+	</div>
+  <strong><p class="info has-text-info">Sharing and Updation link will be sent to the provided email id along with an updation key which can be generated only once and is required for updating content, so keep it safe.</p></strong>
+</div>
       <textarea></textarea>
 </form>
 <div ng-hide="$ctrl.update">
 <p id="empty" ng-if="$ctrl.msg !== ''">{{$ctrl.msg}}</p>
 <button id="savebutton" class="button is-primary is-medium is-fullwidth"
 	ng-click="$ctrl.saveContent()"
-	ng-disabled="$ctrl.anyFieldEmpty() || content.HH.$invalid || content.MM.$invalid" >Save</button>
+	ng-disabled="$ctrl.anyFieldEmpty() || content.HH.$invalid || content.MM.$invalid || content.email.$invalid" >Save</button>
 </div>
 <div ng-show="$ctrl.update"></div>

@@ -8,18 +8,26 @@ angular.module("contentForm").component("createForm", {
 
 	simpleMdE.initEditor($element.find('textarea')[0]);
 	this.author = '';
-	this.hours='';
-	this.minutes= '';
+	this.hours ='';
+	this.minutes = '';
+	this.email = '';
 	this.update = false;
 	this.msg = "";
+	this.loaded = true;
 
 	this.anyFieldEmpty = function() {
 	    return (
 		this.author === "" ||
 		this.hours === "" ||
-		this.minutes === ""
-		    
+		this.minutes === "" ||
+		this.email === ""    
 	    );
+	}
+
+	this.validEmail = function(valid) {
+	    if (this.email === "") return "input is-primary";
+	    if (valid) return "input is-success";
+	    else return "input is-danger";
 	}
 	
 	this.saveContent = function() {

@@ -1,0 +1,18 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="https://drive.google.com/uc?id=1DqUkS5KPie6Zbfre3Eukl-JGMqG1hA8h" width="112" height="28">Summaritizer
+    </a>
+    <a ng-click="$ctrl.toggleNavMenu()" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" ng-click="$ctrl.goToRoute('update')">Update</a>
+      <a class="navbar-item" ng-click="$ctrl.goToRoute('view')">View</a>
+    </div>
+  </div>
+</nav>

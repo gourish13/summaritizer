@@ -1,4 +1,4 @@
-angular.module('contentForm').service("simpleMdE", function() {
+angular.module('updater').service("simpleMdE", function() {
     var simplemde;
     this.initEditor =  function(element) {
 	simplemde = new SimpleMDE({
@@ -14,5 +14,8 @@ angular.module('contentForm').service("simpleMdE", function() {
     this.getValue = function() {
 	console.log(simplemde.value())
 	return simplemde.value();
+    }
+    this.setValue = function(mdContent) {
+	simplemde.value(mdContent);
     }
 })
