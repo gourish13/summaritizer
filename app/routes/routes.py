@@ -2,6 +2,8 @@
 App routes
 """
 
+# from app import test
+
 from urllib.parse import urljoin
 import itty3
 
