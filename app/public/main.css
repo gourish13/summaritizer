@@ -6,6 +6,26 @@
     box-sizing: border-box;
 }
 
+nav {
+    box-shadow: 0px 10px 20px rgba(128, 128, 128, 0.5);
+    margin-bottom: 2vh;
+}
+
+nav img {
+    width: 50px;
+    margin-right: 10px;
+}
+
+nav .navbar-brand {
+    font-weight: bolder;
+    font-size: 1.3rem;
+    font-family: 'RocknRoll One', sans-serif;
+}
+
+.navbar-burger, .navbar-menu {
+    transition: all ease-in-out 0.3s;
+}
+
 #particles-js {
     background: #24292e;
     width: 100%;
@@ -87,6 +107,11 @@ form input[type=number] {
     max-width: 20vh;
 }
 
+form .info.has-text-info {
+    margin-left: 5vw;
+    max-width: 70vw;
+}
+
 form .label {
     margin-left: 5vw;
     margin-bottom: 2vh;
@@ -112,6 +137,32 @@ form .label {
 
 
 
+
+
+
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    background: #fff;
+    opacity: 1;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    height: 10rem;
+    width: 10rem;
+    border: 3px solid #11ddaa;
+    border-right-color: transparent;
+    border-left-color: transparent;
+}
 
 footer {
     font-family: 'RocknRoll One', sans-serif;
