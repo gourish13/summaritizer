@@ -2,26 +2,35 @@
 <form name="content">
       <div class="field">
 	<label class="label">Author</label>
-	<input name="author" type="text" class="input is-normal is-primary is-hovered" placeholder="Author" ng-model="$ctrl.author">
+	<input name="author" type="text" class="input is-normal is-primary" placeholder="Author" ng-model="$ctrl.author">
       </div>
-      <div class="field">
+      <div class="field" ng-hide="$ctrl.update">
 	<label class="label">Delete After</label>
-	<input name="HH"type="number" class="input is-normal is-primary is-hovered" min="1" max="23" placeholder="Hours" ng-model="$ctrl.hours">
-	<input name="MM" type="number" class="input is-normal is-primary is-hovered" min="0" max="59" placeholder="Minutes" ng-model="$ctrl.minutes">
+	<input name="HH" type="number" class={{$ctrl.validateHrsMins()}} min="0" max="24"  placeholder="Hours" ng-model="$ctrl.hours">
+	<input name="MM" type="number" class={{$ctrl.validateHrsMins()}} min="0" max="59" placeholder="Minutes" ng-model="$ctrl.minutes">
       </div>
       <div class="field">
-	<label class="label">Email</label>
-	<div class="control has-icons-left has-icons-right">
-	  <input class={{$ctrl.validEmail(content.email.$valid)}} name="email" type="email" placeholder="your-id@email.com" ng-model="$ctrl.email">
-	</div>
-  <strong><p class="info has-text-info">Sharing and Updation link will be sent to the provided email id along with an updation key which can be generated only once and is required for updating content, so keep it safe.</p></strong>
+	<label class="label" ng-hide="$ctrl.update">Email</label>
+	  <input class={{$ctrl.validEmail(content.email.$valid)}} name="email" type="email" placeholder="your-id@email.com" ng-model="$ctrl.email" ng-hide="$ctrl.update">
+  <strong><p class="info has-text-info">Sharing and Updation link {{$ctrl.update ? 'has been' : 'will be'}} sent to the provided email id along with an updation key which can be generated only once and is required for updating content, so keep it safe.</p></strong>
 </div>
       <textarea></textarea>
 </form>
-<div ng-hide="$ctrl.update">
 <p id="empty" ng-if="$ctrl.msg !== ''">{{$ctrl.msg}}</p>
+<div ng-hide="$ctrl.update">
 <button id="savebutton" class="button is-primary is-medium is-fullwidth"
 	ng-click="$ctrl.saveContent()"
-	ng-disabled="$ctrl.anyFieldEmpty() || content.HH.$invalid || content.MM.$invalid || content.email.$invalid" >Save</button>
+	ng-disabled="$ctrl.anyFieldEmpty() || $ctrl.timeValid() || content.HH.$invalid || content.MM.$invalid || content.email.$invalid" >Save</button>
 </div>
-<div ng-show="$ctrl.update"></div>
+<div ng-show="$ctrl.update" class="field has-addons">
+  <div class="control">
+    <a class="button is-danger has-text-black" ng-click="$ctrl.deleteContent()" ng-disabled=" $ctrl.anyFieldEmpty() ">Delete</a>    
+  </div>
+  <div class="control">
+    <input class="input is-white" type="text" placeholder="Updation Key" ng-model="$ctrl.key">
+  </div>
+  <div class="control">
+    <a class="button is-primary has-text-dark" ng-click="$ctrl.updateContent()" ng-disabled=" $ctrl.anyFieldEmpty() ">Update</a>
+  </div>  
+</div>
+

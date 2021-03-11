@@ -12,7 +12,6 @@ angular.module('contentForm').service("simpleMdE", function() {
 	});
     }
     this.getValue = function() {
-	console.log(simplemde.value())
 	return simplemde.value();
     }
 })

@@ -12,7 +12,7 @@ nav {
 }
 
 nav img {
-    width: 50px;
+    width: 40px;
     margin-right: 10px;
 }
 
@@ -99,7 +99,12 @@ form .input {
     max-width: 40vh;
 }
 
-form .input::placeholder {
+.field.has-addons {
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.input::placeholder {
     color: #0a0a0a;
 }
 
