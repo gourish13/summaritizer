@@ -10,20 +10,9 @@ from app.controllers.post_controller import (
     update_post,
 )
 
-from urllib.parse import urljoin
-
 import itty3
 
 app = itty3.App()
-
-################# Statics ##################################
-app.static_url_path = '/static/'
-app.static_root = 'app/public'
-url = urljoin(
-    app.static_url_path, "<any:asset_path>"
-)
-app.add_route("GET", url, app.render_static)
-############################################################
 
 @app.post('/create')
 def create(request):
@@ -71,11 +60,6 @@ def delete(request, _id, _uuid):
         data = delete_post(_id, _uuid, key)
     )
 
-    
-@app.post('/delete-expired')
-def delete_expired(request):
-    key     = request.POST['key']
-
 
 @app.get('/test')
 def test(request):
@@ -88,17 +72,3 @@ def test(request):
         'djsnfusfnsjnc342'
     )
     return app.render_json(request, content_type = itty3.JSON, data = dict(status = 'ok'))
-
-
-@app.get('/')
-def index(request):
-    return app.render(request,
-                      open('app/public/index.html', 'r').read()
-    )
-
-
-@app.get('/<any:offset>')
-def index_with_offset(request, offset):
-    return app.render(request,
-                      open('app/public/index.html', 'r').read()
-    )
