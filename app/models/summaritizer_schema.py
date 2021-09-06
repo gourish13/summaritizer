@@ -1,5 +1,5 @@
 """
-Summaritizer database model
+Summaritizer database schema
 """
 
 from pydal import Field
