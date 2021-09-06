@@ -53,6 +53,6 @@ def send_email(rec, url, _id, _uuid, key, hrs, mins):
     #Send Mail
     smtp.sendmail(EMAIL_ID, rec , msg.as_string())
 
-    print("Mail sent to %s" %rec)
+    print("[ 📧 📬 ] %s" %rec)
 
     smtp.quit()

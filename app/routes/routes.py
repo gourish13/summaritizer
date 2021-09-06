@@ -13,7 +13,7 @@ import itty3
 
 app = itty3.App()
 
-@app.post('/create')
+@app.post('/api/v1/create')
 def create(request):
     author  = request.POST['author']
     hours   = int(request.POST['hours'])
@@ -24,11 +24,12 @@ def create(request):
     return app.render_json(
         request,
         content_type = itty3.JSON,
+        status_code = 201,
         data = data
     )
 
 
-@app.get('/read/<str:_id>')
+@app.get('/api/v1/read/<str:_id>')
 def read(request, _id):
     _uuid   = _id[ _id.find('-') + 1 : ]
     _id     = int(_id[ : _id.find('-') ])
@@ -36,11 +37,12 @@ def read(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
+        status_code = 200,
         data = data
     )
 
 
-@app.post('/update/<str:_id>')
+@app.post('/api/v1/update/<str:_id>')
 def update(request, _id):
     _uuid   = _id[ _id.find('-') + 1 : ]
     _id     = int(_id[ : _id.find('-') ])
@@ -51,11 +53,12 @@ def update(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
+        status_code = 201,
         data = data
     )
 
 
-@app.post('/delete/<str:_id>')
+@app.post('/api/v1/delete/<str:_id>')
 def delete(request, _id):
     _uuid   = _id[ _id.find('-') + 1 : ]
     _id     = int(_id[ : _id.find('-') ])
@@ -64,15 +67,18 @@ def delete(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
+        status_code = 204,
         data = data
     )
 
 
+@app.get('/api/v1')
 @app.get('/<str:path>')
 @app.get('/')
 def index_or_catchall(request, path = None):
     return app.render_json(request, 
                                content_type = itty3.JSON, 
+                               status_code = 418,
                                data = { 
                                 'response': { 
                                     'message': 'Welcome to summaritizer api' ,
