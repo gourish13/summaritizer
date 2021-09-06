@@ -2,42 +2,8 @@
 Summaritizer database model
 """
 
-from pydal import Field
-
-from .connect import db
-
-db.define_table('summary',
-                Field('uuid', type='string', unique=True, required=True, notnull=True),
-                Field('author', type='string', length=30, required=True, notnull=True),
-                Field('delete_at', type='datetime', required=True, notnull=True),
-                Field('email', type='string', required=True, notnull=True),
-                Field('content', type='text', required=True, notnull=True),
-                Field('key', type='string', required=True, notnull=True)
-                )
-
-summary_delete_expired_query = """
-CREATE OR REPLACE FUNCTION summary_delete_expired_rows() RETURNS TRIGGER
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    DELETE FROM summary WHERE delete_at < NOW();
-    RETURN NEW;
-END;
-$$;
-"""
-
-trigger_query = """
-DROP TRIGGER IF EXISTS summary_delete_expired_rows_trigger ON summary;
-CREATE TRIGGER summary_delete_expired_rows_trigger
-    AFTER INSERT OR UPDATE ON summary
-    EXECUTE PROCEDURE summary_delete_expired_rows();
-"""
-
-db.executesql(summary_delete_expired_query)
-db.executesql(trigger_query)
-
-db.commit()
-
+from app.utils.hash import verify
+from .summaritizer_schema import db
 
 def add_post(_uuid, author, deletes_at, email, content, key):
     _id = db.summary.insert(
@@ -52,26 +18,63 @@ def add_post(_uuid, author, deletes_at, email, content, key):
     return _id
 
 
-def get_post(_id, _uuid):
-    result = db.summary(
-        (db.summary.id == _id) & (db.summary.uuid == _uuid)
-    )
-    if not result:
+def get_post(_id, _uuid, deletes_at):
+    result = db(
+        (db.summary.id == _id) & 
+        (db.summary.uuid == _uuid) &
+        (db.summary.delete_at > deletes_at)
+    ).select(db.summary.author, db.summary.content)
+    if result:
         return result.first().as_dict()
-    return None
+    return {'status': 'no post found'}
 
 
-def remove_post(_id, _uuid, key):
-    modified = db.summary(
-        (db.summary.id == _id) & (db.summary.uuid == _uuid) & (db.summary.key == key)
+def match_key(_id, _uuid, deletes_at, key):
+    result = db(
+        (db.summary.id == _id) &
+        (db.summary.uuid == _uuid) &
+        (db.summary.delete_at > deletes_at)
+    ).select(db.summary.key)
+    if result:
+        verify(key, result.first().as_dict().get('key'))
+    else:
+        return None
+
+
+def remove_post(_id, _uuid, key, deletes_at):
+    key_status = match_key(_id, _uuid, deletes_at, key)
+    if key_status == None:
+        return {
+            'status': '''\
+Post has already expired \
+and has been deleted. \
+The one you are seeing is \
+a local cached version.'''}
+    if key_status == False:
+        return {'status': 'Key does not match'}
+    db(
+        (db.summary.id == _id) & 
+        (db.summary.uuid == _uuid)
     ).delete()
     db.commit()
-    return modified
+    return {'status': 'Post deleted'}
 
 
-def update_post(_id, _uuid, author, content, key):
-    modified = db.summary(
-        (db.summary.id == _id) & (db.summary.uuid == _uuid) & (db.summary.key == key)
+def update_post_content(
+    _id, _uuid, author, content, key, deletes_at):
+    key_status = match_key(_id, _uuid, deletes_at, key)
+    if key_status == None:
+        return {
+            'status': '''\
+Post has already expired \
+and has been deleted. \
+The one you are seeing is \
+a local cached version.'''}
+    if key_status == False:
+        return {'status': 'Key does not match'}
+    db(
+        (db.summary.id == _id) & 
+        (db.summary.uuid == _uuid)
     ).update(author = author, content = content)
     db.commit()
-    return modified
+    return {'status': 'Post updated'}

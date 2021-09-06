@@ -1,8 +1,7 @@
 """
 App routes
 """
-
-# from app import test
+from app.utils.email import send_email
 from app.controllers.post_controller import (
     new_post,
     show_post,
@@ -21,7 +20,7 @@ def create(request):
     mins    = int(request.POST['minutes'])
     email   = request.POST['email']
     content = request.POST['content']
-    data = new_post(author, hours, mins, email, content)
+    data    = new_post(author, hours, mins, email, content)
     return app.render_json(
         request,
         content_type = itty3.JSON,
@@ -29,21 +28,26 @@ def create(request):
     )
 
 
-@app.post('/read/<int:_id>/<uuid:_uuid')
-def read(request, _id, _uuid):
+@app.get('/read/<str:_id>')
+def read(request, _id):
+    _uuid   = _id[ _id.find('-') + 1 : ]
+    _id     = int(_id[ : _id.find('-') ])
+    data    = show_post(_id, _uuid)
     return app.render_json(
         request,
         content_type = itty3.JSON,
-        data = show_post(_id, _uuid)
+        data = data
     )
 
 
-@app.post('/update/<int:_id>/<uuid:_uuid')
-def update(request, _id, _uuid):
+@app.post('/update/<str:_id>')
+def update(request, _id):
+    _uuid   = _id[ _id.find('-') + 1 : ]
+    _id     = int(_id[ : _id.find('-') ])
     author  = request.POST['author']
     content = request.POST['content']
     key     = request.POST['key']
-    data = update_post(_id, _uuid, author, content, key)
+    data    = update_post(_id, _uuid, author, content, key)
     return app.render_json(
         request,
         content_type = itty3.JSON,
@@ -51,24 +55,33 @@ def update(request, _id, _uuid):
     )
 
 
-@app.post('/delete/<int:_id>/<uuid:_uuid')
-def delete(request, _id, _uuid):
+@app.post('/delete/<str:_id>')
+def delete(request, _id):
+    _uuid   = _id[ _id.find('-') + 1 : ]
+    _id     = int(_id[ : _id.find('-') ])
     key     = request.POST['key']
+    data    = delete_post(_id, _uuid, key)
     return app.render_json(
         request,
         content_type = itty3.JSON,
-        data = delete_post(_id, _uuid, key)
+        data = data
     )
 
 
-@app.get('/test')
-def test(request):
-    print(request.GET)
-    send_email(
-        'sadhu2gourish@gmail.com',
-        'https://summaritizer.herokuapp.com',
-        1,
-        3,
-        'djsnfusfnsjnc342'
-    )
-    return app.render_json(request, content_type = itty3.JSON, data = dict(status = 'ok'))
+@app.get('/<str:path>')
+@app.get('/')
+def index_or_catchall(request, path = None):
+    return app.render_json(request, 
+                               content_type = itty3.JSON, 
+                               data = { 
+                                'response': { 
+                                    'message': 'Welcome to summaritizer api' ,
+                                    'endpoints': {
+                                            '/api/v1/create': 'Create Post',
+                                            '/api/v1/read/<id>': 'Fetch Post by Id',
+                                            '/api/v1/update/<id>': 'Update Post by Id',
+                                            '/api/v1/delete/<id>': 'Delete Post by Id'
+                                     }
+                                }
+                               }
+                          )
