@@ -23,7 +23,7 @@ def new_post(author, hrs, mins, email, content):
     key = genkey()
     _id = add_post(_uuid, author, deletes_at, email, content, hashed(key))
     send_email(email, BASE_URL, _id, _uuid, key, hrs, mins)
-    return dict(id = _id, uuid = _uuid)
+    return dict(id = _id + '-' + _uuid)
 
 
 def show_post(_id, _uuid):
