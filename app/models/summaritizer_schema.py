@@ -3,8 +3,11 @@ Summaritizer database schema
 """
 
 from pydal import Field
+from os import environ
 
 from .connect import db
+
+migrate_file = 'summary_prod.table' if environ['APP_MODE'] == 'PROD' else 'summary_dev.table'
 
 db.define_table(
                     'summary',
@@ -13,7 +16,8 @@ db.define_table(
                     Field('delete_at', type='datetime', required=True, notnull=True),
                     Field('email', type='string', required=True, notnull=True),
                     Field('content', type='text', required=True, notnull=True),
-                    Field('key', type='string', required=True, notnull=True)
+                    Field('key', type='string', required=True, notnull=True),
+                    migrate=migrate_file 
                 )
 
 summary_delete_expired_query = """

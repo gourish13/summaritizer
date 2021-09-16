@@ -11,7 +11,7 @@ from app.controllers.post_controller import (
 
 import itty3
 
-app = itty3.App()
+app = itty3.App(debug=True)
 
 @app.post('/api/v1/create')
 def create(request):
