@@ -23,7 +23,7 @@ def new_post(author, hrs, mins, email, content):
     key = genkey()
     _id = add_post(_uuid, author, deletes_at, email, content, hashed(key))
     send_email(email, BASE_URL, _id, _uuid, key, hrs, mins)
-    return dict(id = _id + '-' + _uuid)
+    return dict(id = f'{_id}-{_uuid}')
 
 
 def show_post(_id, _uuid):
@@ -33,10 +33,10 @@ def show_post(_id, _uuid):
 
 def delete_post(_id, _uuid, key):
     deletes_at = datetime.utcnow()
-    return remove_post(_id, _uuid, hashed(key), deletes_at)
+    return remove_post(_id, _uuid, key, deletes_at)
 
 
 def update_post(_id, _uuid, author, content, key):
     deletes_at = datetime.utcnow()
     return update_post_content(_id, _uuid, author, 
-                               content, hashed(key), deletes_at)
+                               content, key, deletes_at)

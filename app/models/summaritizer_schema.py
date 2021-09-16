@@ -35,7 +35,10 @@ CREATE TRIGGER summary_delete_expired_rows_trigger
     EXECUTE PROCEDURE summary_delete_expired_rows();
 """
 
+create_index = "CREATE INDEX IF NOT EXISTS idx_summary ON summary(id, uuid) INCLUDE (key, author, content);"
+
 db.executesql(summary_delete_expired_query)
 db.executesql(trigger_query)
+db.executesql(create_index)
 
 db.commit()

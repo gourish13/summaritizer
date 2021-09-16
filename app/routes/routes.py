@@ -37,8 +37,8 @@ def read(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
-        status_code = 200,
-        data = data
+        status_code = data['status_code'],
+        data = data['data']
     )
 
 
@@ -53,8 +53,8 @@ def update(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
-        status_code = 201,
-        data = data
+        status_code = data['status_code'],
+        data = data['data']
     )
 
 
@@ -67,8 +67,8 @@ def delete(request, _id):
     return app.render_json(
         request,
         content_type = itty3.JSON,
-        status_code = 204,
-        data = data
+        status_code = data['status_code'],
+        data = data['data']
     )
 
 
