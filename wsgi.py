@@ -7,4 +7,5 @@ def main():
     return app
 
 if __name__ == "__main__":
-    main().run(debug=True)
+    from os import environ
+    main().run(debug=True, addr='0.0.0.0', port=int(environ['PORT']))
