@@ -9,7 +9,7 @@ from .connect import db
 db.define_table(
                     'summary',
                     Field('uuid', type='string', unique=True, required=True, notnull=True),
-                    Field('author', type='string', length=30, required=True, notnull=True),
+                    Field('author', type='string', length=60, required=True, notnull=True),
                     Field('delete_at', type='datetime', required=True, notnull=True),
                     Field('email', type='string', required=True, notnull=True),
                     Field('content', type='text', required=True, notnull=True),
